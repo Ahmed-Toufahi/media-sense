@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+@theme {
+    --color-primaryBlue : #1D5D9B;
+    --color-navyBlue : #0F2D40;
+    --color-softYellow: #FFDA7F;
+    --color-lightBeige: #FDF1E3;
+    --color-lightGrey: #F5F5F5;
+    --color-pink: #FFAAAB;
+}
+
+html {
+    font-family: "Cormorant Garamond", serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 24px;
+}
+
+.inter-regular {
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.cormorant-garamond-bold {
+    font-family: "Cormorant Garamond", serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.cormorant-garamond-regular {
+    font-family: "Cormorant Garamond", serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
