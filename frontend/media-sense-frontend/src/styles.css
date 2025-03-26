@@ -3,7 +3,9 @@
 @theme {
     --color-primaryBlue : #1D5D9B;
     --color-navyBlue : #0F2D40;
+    --color-softBlue: #3477B9;
     --color-softYellow: #FFDA7F;
+    --color-darkYellow:rgb(255, 214, 110);
     --color-lightBeige: #FDF1E3;
     --color-lightGrey: #F5F5F5;
     --color-pink: #FFAAAB;
@@ -36,4 +38,13 @@ html {
     font-optical-sizing: auto;
     font-weight: 400;
     font-style: normal;
+}
+
+.playfair-regular {
+    font-family: "Playfair", serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings:
+      "wdth" 100;
 }
