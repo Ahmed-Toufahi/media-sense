@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class testController {
     @GetMapping("/test-auth")
     public String test() {
-        return "Access Authorized";
+        return "Access Authorized !";
     }
 }
