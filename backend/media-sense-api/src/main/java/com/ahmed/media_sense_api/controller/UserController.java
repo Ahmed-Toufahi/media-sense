@@ -1,12 +1,17 @@
 package com.ahmed.media_sense_api.controller;
 
-import com.ahmed.media_sense_api.model.User;
+import com.ahmed.media_sense_api.dto.AuthResponse;
+import com.ahmed.media_sense_api.dto.RegisterRequest;
+import com.ahmed.media_sense_api.dto.UserDTO;
+import com.ahmed.media_sense_api.model.CustomUserDetails;
 import com.ahmed.media_sense_api.service.UserService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+
 
 @RestController
+@RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;
@@ -15,13 +20,15 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public User register(@RequestBody User user) {
-        userService.registerUser(user);
-        return user;
+    public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request) {
+        String token = userService.registerUser(request);
+        return ResponseEntity.ok(new AuthResponse(token));
     }
 
-    @PostMapping("/login")
-    public String login(@RequestBody User user) {
-        return userService.verify(user);
+    @GetMapping("/me")
+    public ResponseEntity<UserDTO> getAuthenticatedUser(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        UserDTO user = userService.getUserProfile(userDetails);
+        return ResponseEntity.ok(user);
     }
+
 }

@@ -1,10 +1,11 @@
 package com.ahmed.media_sense_api.service;
 
+import com.ahmed.media_sense_api.dto.RegisterRequest;
+import com.ahmed.media_sense_api.dto.UserDTO;
+import com.ahmed.media_sense_api.model.CustomUserDetails;
 import com.ahmed.media_sense_api.model.User;
 import com.ahmed.media_sense_api.repo.UserRepo;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private final PasswordEncoder passwordEncoder;
-    private final AuthenticationManager authenticationManager;
     private final JWTService jwtService;
     private final UserRepo userRepo;
 
@@ -20,24 +20,22 @@ public class UserService {
     public UserService(UserRepo userRepo, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JWTService jwtService) {
         this.userRepo = userRepo;
         this.passwordEncoder = passwordEncoder;
-        this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
     }
 
-    public User registerUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+    public String registerUser(RegisterRequest request) {
+        User user = new User();
+        user.setUsername(request.getUsername());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
         userRepo.save(user);
-        return user;
+        return jwtService.generateToken(user.getUsername());  // Return JWT after registration
     }
 
-    public String verify(User user) {
-        Authentication authentication =
-                authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
-        if(authentication.isAuthenticated()) {
-            return jwtService.generateToken(user.getUsername());
+    public UserDTO getUserProfile(CustomUserDetails userDetails) {
+        if (userDetails != null) {
+            return new UserDTO(userDetails.getUsername());
         }
-        else {
-            return "Failure";
-        }
+        throw new RuntimeException("No authenticated user found");
     }
+
 }
