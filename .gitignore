@@ -16,6 +16,5 @@ tmp/
 .DS_Store
 Thumbs.db
 
-applications.properties
-
+**/application.properties
 
