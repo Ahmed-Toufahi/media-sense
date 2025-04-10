@@ -5,7 +5,7 @@ yarn-error.log
 
 # Angular build files
 /dist/
-/tmp/
+tmp/
 
 # IDE files
 .idea/
@@ -15,4 +15,7 @@ yarn-error.log
 # OS generated files
 .DS_Store
 Thumbs.db
+
+applications.properties
+
 
