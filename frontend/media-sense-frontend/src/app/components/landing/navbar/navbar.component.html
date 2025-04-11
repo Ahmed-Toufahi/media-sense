@@ -1,15 +1,19 @@
-<nav class="flex justify-between items-center py-2 px-6 bg-white">
-    <div>
-        <img src="logo-media-sense.png" alt="Media Sense Logo" class="h-7 w-auto">
+<nav class="flex flex-wrap items-center md:justify-between justify-center px-4 py-2 bg-white">
+
+    <div class="flex-shrink-0">
+        <img src="logo-media-sense.png" alt="Media Sense Logo" class="h-6 sm:h-7 w-auto">
     </div>
 
-    <div class="flex space-x-6 text-xs text-navyBlue-600 ml-auto mr-10">
-        <a href="#" class=" hover:underline">Home</a>
-        <a href="#" class=" hover:underline">Features</a>
-        <a routerLink="/login" class=" hover:underline">Login</a>
-    </div>
+    <div class="flex flex-wrap items-center justify-center text-xs sm:text-sm text-navyBlue-600 gap-x-4 sm:gap-x-6">
+        <a href="#" class="hover:underline">Home</a>
+        <a href="#" class="hover:underline">Features</a>
+        <a routerLink="/login" class="hover:underline">Login</a>
 
-    <a routerLink="/signup" class="bg-softBlue text-sm text-white px-4 py-0.75 rounded-md hover:bg-primaryBlue">
+        <a routerLink="/signup"
+       class="text-xs sm:text-sm bg-softBlue text-white px-3 sm:px-4 py-1 rounded-md hover:bg-primaryBlue">
         Join Now
-    </a>   
+        </a>
+    </div>
+
+    
 </nav>
