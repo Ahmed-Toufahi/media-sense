@@ -2,6 +2,7 @@ package com.ahmed.media_sense_api.service;
 
 import com.ahmed.media_sense_api.dto.RegisterRequest;
 import com.ahmed.media_sense_api.dto.UserDTO;
+import com.ahmed.media_sense_api.exception.UserAlreadyExistsException;
 import com.ahmed.media_sense_api.model.CustomUserDetails;
 import com.ahmed.media_sense_api.model.User;
 import com.ahmed.media_sense_api.repo.UserRepo;
@@ -24,6 +25,9 @@ public class UserService {
     }
 
     public String registerUser(RegisterRequest request) {
+        if (userRepo.existsByUsername(request.getUsername())) {
+            throw new UserAlreadyExistsException("An account with this email already exists.");
+        }
         User user = new User();
         user.setUsername(request.getUsername());
         user.setPassword(passwordEncoder.encode(request.getPassword()));

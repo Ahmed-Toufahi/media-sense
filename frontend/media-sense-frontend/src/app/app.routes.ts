@@ -6,6 +6,7 @@ import { SignupComponent } from './components/landing/signup/signup.component';
 export const routes: Routes = [
     {path: "", component: LandingPageComponent},
     {path: "login", component: LoginComponent},
-    {path: "signup", component: SignupComponent}
+    {path: "signup", component: SignupComponent},
+    {path: "app", component: LandingPageComponent}, // Placeholder for the main app component
 
 ];

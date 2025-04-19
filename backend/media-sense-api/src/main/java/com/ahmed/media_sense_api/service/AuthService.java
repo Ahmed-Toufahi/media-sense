@@ -1,6 +1,7 @@
 package com.ahmed.media_sense_api.service;
 
 
+import com.ahmed.media_sense_api.exception.InvalidCredentialsException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,15 +19,30 @@ public class AuthService {
         this.jwtService = jwtService;
     }
 
+//    public String authenticate(String username, String password) {
+//        try {
+//            Authentication authentication = authenticationManager.authenticate(
+//                    new UsernamePasswordAuthenticationToken(username, password)
+//            );
+//            return jwtService.generateToken(username);
+//        } catch (Exception e) {
+//            throw new BadCredentialsException("Invalid username or password");
+//        }
+//    }
+
     public String authenticate(String username, String password) {
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(username, password)
             );
-            return jwtService.generateToken(username);
+            return jwtService.generateToken(authentication.getName());
+        } catch (BadCredentialsException e) {
+            // Wrap and rethrow with your custom exception
+            throw new InvalidCredentialsException("Invalid username or password");
         } catch (Exception e) {
-            throw new BadCredentialsException("Invalid username or password");
+            throw new RuntimeException("Authentication failed due to an internal error");
         }
     }
+
 }
 

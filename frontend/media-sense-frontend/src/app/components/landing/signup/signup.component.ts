@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -11,11 +13,18 @@ import { RouterLink } from '@angular/router';
 })
 export class SignupComponent {
   form: FormGroup;
+  isSubmitting = false;
+  errorMessage: string | null = null;
+  signupSuccess = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required],
     }, { validators: this.passwordsMatch });
   }
@@ -32,10 +41,35 @@ export class SignupComponent {
   
   onSubmit() {
     this.form.markAllAsTouched();
+    this.errorMessage = null;
 
     if (this.form.valid) {
-      console.log("Form submitted:", this.form.value);
+      this.isSubmitting = true;
+      
+      const email = this.email?.value;
+      const password = this.password?.value;
+      
+      this.authService.register(email, password)
+        .pipe(
+          finalize(() => this.isSubmitting = false)
+        )
+        .subscribe({
+          next: () => {
+            this.signupSuccess = true;
+            setTimeout(() => {
+              this.router.navigate(['/']);
+            }, 1500);
+          },
+          error: (error) => {
+            if (typeof error === 'string') {
+              this.errorMessage = error;
+            } else if (error instanceof Error) {
+              this.errorMessage = error.message;
+            } else {
+              this.errorMessage = 'Registration failed. Please try again.';
+            }
+          }
+        });
     }
   }
 }
-
