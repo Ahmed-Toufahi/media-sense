@@ -52,6 +52,9 @@
         >
           Login
         </button>
+        <div *ngIf="errorMessage" class="text-xs text-red-500 mt-1">
+          {{ errorMessage }}
+        </div>
       </form>
       
     </div>

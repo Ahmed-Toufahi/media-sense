@@ -56,9 +56,7 @@ export class SignupComponent {
         .subscribe({
           next: () => {
             this.signupSuccess = true;
-            setTimeout(() => {
               this.router.navigate(['/']);
-            }, 1500);
           },
           error: (error) => {
             if (typeof error === 'string') {
